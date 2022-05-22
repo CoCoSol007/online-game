@@ -1,4 +1,3 @@
-from multiprocessing import connection
 import pygame
 from telechargement_image import download
 import socket
@@ -62,7 +61,8 @@ class Enemi(pygame.sprite.Sprite):
         
         donnees_recus = self.ClientMultiSocket.recv(128).decode('utf-8')
 
-        
+        if donnees_recus == "stop":
+            self.rect.center = (-1000,0)
 
         
         
@@ -82,12 +82,3 @@ class Enemi(pygame.sprite.Sprite):
             self.move = True 
         else:
             self.move = False
-
-        
-        
-            
-        
-            
-            
-            
-            
