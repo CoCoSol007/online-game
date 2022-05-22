@@ -7,7 +7,7 @@ import threading
 ServerSideSocket = socket.socket()
 host = '127.0.0.1'
 port = 2004
-ThreadCount = 0
+
 
 
 
@@ -19,7 +19,8 @@ def creer_un_thread( cible):
 
 ServerSideSocket.bind((host, port))
 
-print('Socket is listening..')
+print('serveur lancer...')
+print("En ecoute ...")
 ServerSideSocket.listen(5)
 
 
@@ -27,6 +28,8 @@ def transfert (client_envoi, client_reçoi):
 
     msg = reçoi(client_envoi)
     envoi(client_reçoi, msg)
+
+    
 
 
 
@@ -39,19 +42,39 @@ def reçoi(connection):
 
     DataSorti = connection.recv(128).decode('utf-8') 
     if DataSorti == "stop":
-        print("a")
+        print ("Un joueur ces deconecté ...")
+        print (str(len(all_client))+" joueur ...")
+        print ("en attente de nouveau joueur ...")
+        print ("mode hors ligne activer ...")
+        all_client.remove(connection)
+
+    
+
     return DataSorti
+    
+def console():
+    input("==> ")
     
 
 
-Client1, adresse1 =  ServerSideSocket.accept()
-print ("1 joueur ...")
-Client2, adresse2 =  ServerSideSocket.accept() 
-print ("2 jpueurs ...")
+all_client = []
+
+Client, adresse =  ServerSideSocket.accept()
+all_client.append(Client)
+print (str(len(all_client))+" joueur ...")
+
+Client, adresse =  ServerSideSocket.accept() 
+all_client.append(Client)
+print (str(len(all_client))+" joueur ...")
 
 
 
 while True :
-    creer_un_thread(transfert(Client1, Client2))
-    creer_un_thread(transfert(Client2, Client1))
-    
+    try:
+        creer_un_thread(transfert(all_client[0], all_client[1]))
+        creer_un_thread(transfert(all_client[1], all_client[0]))
+        #creer_un_thread (console())
+    except:
+        Client, adresse =  ServerSideSocket.accept()
+        all_client.append(Client)
+        print (str(len(all_client))+" joueur ...")
