@@ -32,6 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = ">"
 
         self.score = 0
+        self.type = "player"
     
 
     def update(self, tic):
@@ -95,6 +96,7 @@ class Enemi(pygame.sprite.Sprite):
 
         self.vitesse = 10
         self.direction = ">"
+        self.type = "enemi"
 
         self.positionX = 100
         self.positionY = 300

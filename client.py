@@ -3,6 +3,7 @@ import pygame
 from Entity import *
 import threading
 import socket
+from bullet import bullet
 
 def creer_un_thread( cible):
 
@@ -52,7 +53,9 @@ player_groupe = pygame.sprite.Group()
 # On ajoute le héros au groupe
 player_groupe.add(player)
 
-tic = 0
+Tic_animation = 0
+tic_bullet = 0
+Bullet_remain = True
 
 # On créé une variable pour sortir de la boucle principale
 marche = True
@@ -60,9 +63,14 @@ marche = True
 # On met en place la boucle principale d'affichage
 while marche:
     
-    tic += 0.25
-    if tic == 4:
-        tic = 0
+    Tic_animation += 0.25
+    tic_bullet += 1
+    if Tic_animation == 4:
+        Tic_animation = 0
+    if tic_bullet  == 50:
+        Bullet_remain = True
+        tic_bullet = 0
+
     
     # On récupère la liste des évènements actuels
     evenements = pygame.event.get()
@@ -80,8 +88,11 @@ while marche:
             if evenement.key == pygame.K_ESCAPE:
                 # On sort de la boucle
                 marche = False
-                
-    
+        if Bullet_remain: 
+            if evenement.type == pygame.MOUSEBUTTONDOWN:
+                object_to_draw.add(bullet(player))
+                Bullet_remain = False 
+
 
     # On récupère les touches actuellement appuyées
     touches = pygame.key.get_pressed()
@@ -117,7 +128,7 @@ while marche:
     creer_un_thread(cible= enemi.recevoir_donnees)
     
     # On demande aux éléments des groupes de se mettre à jour
-    object_to_draw.update(tic)
+    object_to_draw.update(Tic_animation)
     
     
     

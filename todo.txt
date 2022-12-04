@@ -1,0 +1,5 @@
+optimisé le systeme de soket 
+
+cree un systemme de tire de bullet qui avance un certain temps 
+crée une colision avec l'enemi pour gagner des point 
+l'adapté pour que ce soit en ligne
