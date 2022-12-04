@@ -17,12 +17,6 @@ def download(couleur):
             tilset.subsurface(0*32,0*32,32,32),
             tilset.subsurface(1*32,0*32,32,32),
             tilset.subsurface(2*32,0*32,32,32),
-            tilset.subsurface(3*32,0*32,32,32),
-            tilset.subsurface(4*32,0*32,32,32),
-            #tilset.subsurface(0*32,1*32,32,32),
-            #tilset.subsurface(1*32,1*32,32,32),
-            #tilset.subsurface(2*32,1*32,32,32),
-            #tilset.subsurface(3*32,1*32,32,32),
             
         
     ]

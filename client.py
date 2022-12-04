@@ -1,8 +1,6 @@
 # On importe le module pygame
 import pygame
-from player import Player
-from player import envoi
-from playerEnemi import Enemi
+from Entity import *
 import threading
 import socket
 
@@ -12,11 +10,11 @@ def creer_un_thread( cible):
 		thread.daemon = True
 		thread.start()
 
-ClientMultiSocket = socket.socket()
+connexion = socket.socket()
 host = '192.168.1.40'
 port = 2004
-ClientMultiSocket.connect((host, port))
-envoi("join", ClientMultiSocket)
+connexion.connect((host, port))
+envoi("join", connexion)
 
 
         
@@ -31,9 +29,9 @@ horloge = pygame.time.Clock()
 
 
 # On créé un écran pour notre programme (= une fenêtre)
-ecran = pygame.display.set_mode( (800, 600) )
-
-
+screen = pygame.display.set_mode( (800, 600) )
+fond = pygame.image.load("screen.png")
+fond = pygame.transform.scale(fond, (800,600))
 
 # On définit le taux de rafraîchissement de la fenêtre
 fps = 30
@@ -41,17 +39,18 @@ fps = 30
 
 
 # On instancie un héros
-player1 = Player(ClientMultiSocket)
-enemi = Enemi(ClientMultiSocket)
+player = Player(connexion)
+enemi = Enemi(connexion)
 
+object_to_draw = pygame.sprite.Group(player, enemi)
 
 
 
 # On créé un groupe où placer le héros
-player1_groupe = pygame.sprite.Group()
+player_groupe = pygame.sprite.Group()
 
 # On ajoute le héros au groupe
-player1_groupe.add(player1)
+player_groupe.add(player)
 
 tic = 0
 
@@ -61,8 +60,8 @@ marche = True
 # On met en place la boucle principale d'affichage
 while marche:
     
-    tic += 0.125
-    if tic == 6:
+    tic += 0.25
+    if tic == 4:
         tic = 0
     
     # On récupère la liste des évènements actuels
@@ -95,31 +94,30 @@ while marche:
 
     # On teste les touches appuyées
     if touches[pygame.K_q]:
-        # Multiplying the value of `player1.vitesse` by -1 and assigning the result to `mouvementX`.
-        mouvementX = -1 * player1.vitesse
-        player1.direction = ">"
+        # Multiplying the value of `player.vitesse` by -1 and assigning the result to `mouvementX`.
+        mouvementX = -1 * player.vitesse
+        player.direction = ">"
     elif touches[pygame.K_d]:
-        # Assigning the value of `player1.vitesse` to `mouvementX`.
-        mouvementX = player1.vitesse
-        player1.direction = "<"
+        # Assigning the value of `player.vitesse` to `mouvementX`.
+        mouvementX = player.vitesse
+        player.direction = "<"
 
     if touches[pygame.K_z]:
-        mouvementY = -1*player1.vitesse
+        mouvementY = -1*player.vitesse
     elif touches[pygame.K_s]:
-        mouvementY = player1.vitesse
+        mouvementY = player.vitesse
 
     
 
-    # Assigning the values of `mouvementX` and `mouvementY` to the `mouvement` attribute of `player1`.
-    player1.mouvement = (mouvementX, mouvementY)
+    # Assigning the values of `mouvementX` and `mouvementY` to the `mouvement` attribute of `player`.
+    player.mouvement = (mouvementX, mouvementY)
            
 
     #on recupere la position de l'enemie
     creer_un_thread(cible= enemi.recevoir_donnees)
     
     # On demande aux éléments des groupes de se mettre à jour
-    player1_groupe.update(tic)
-    enemi.group.update(tic)
+    object_to_draw.update(tic)
     
     
     
@@ -127,15 +125,14 @@ while marche:
 
 
     # On efface l'écran
-    ecran.fill((0, 100, 0))
+    screen.blit(fond, (0,0))
     
 
     # On dessine tous les membres des groupes sur une surface donnée et le score
-    player1_groupe.draw(ecran)
-    enemi.group.draw(ecran)
+    object_to_draw.draw(screen)
     
 
     pygame.display.update()
     horloge.tick(fps)
 
-envoi("stop", ClientMultiSocket)
+envoi("stop", connexion)
