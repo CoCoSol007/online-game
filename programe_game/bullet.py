@@ -6,7 +6,7 @@ class bullet(pygame.sprite.Sprite):
 
         self.player = player
 
-        self.image = pygame.image.load("bullet.png")
+        self.image = pygame.image.load("programe_game\Bullet.png")
 
         if self.player.type == "player":
             self.image = self.image.subsurface(0*8,0*8,8,8)

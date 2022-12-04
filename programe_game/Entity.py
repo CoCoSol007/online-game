@@ -1,5 +1,6 @@
 import pygame
-from telechargement_image import download
+from programe_game.telechargement_image import download
+from programe_game.bullet import bullet
 
 class Entity(pygame.sprite.Sprite):
     def __init__(self, color):
@@ -33,6 +34,7 @@ class Player(pygame.sprite.Sprite):
 
         self.score = 0
         self.type = "player"
+        self.shoot = 0
     
 
     def update(self, tic):
@@ -59,16 +61,13 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.move_ip( self.mouvement)
 
+
     def envoi_coo(self):
-        msg = str(self.rect.centerx) + "," + str(self.rect.centery)
-        envoi(msg,self.conexion)
-    
-def envoi(msg,conection):
-        msg = msg
+
+        msg = str(self.rect.centerx) + "," + str(self.rect.centery) + "," + str(self.shoot)
         msg = msg.encode("utf-8")
-        conection.send(msg)
-    
-    
+        self.conexion.send(msg)
+        self.shoot = 0
 
         
 ################################################################    
@@ -103,8 +102,8 @@ class Enemi(pygame.sprite.Sprite):
 
         self.score = 0
 
-       
-
+        self.group = pygame.sprite.Group()
+        self.type = "enemi"
         
         self.ClientMultiSocket = cliensocket
         
@@ -142,16 +141,14 @@ class Enemi(pygame.sprite.Sprite):
         self.ancienne_positionY = self.positionY
         
         donnees_recus = self.ClientMultiSocket.recv(128).decode('utf-8')
-
-        if donnees_recus == "stop":
-            self.rect.center = (-1000,0)
-
-        
+       
         
  
         donnees_recus = donnees_recus.split(',')
         self.positionX = int(donnees_recus[0])
         self.positionY = int(donnees_recus[1])
+
+
                 
 
         if self.ancienne_positionX < self.positionX:
@@ -164,4 +161,10 @@ class Enemi(pygame.sprite.Sprite):
             self.move = True 
         else:
             self.move = False
+
+        if donnees_recus[2] == "1":
+            self.shoot()
+
+    def shoot(self):
+        self.group.add(bullet(self))
 
