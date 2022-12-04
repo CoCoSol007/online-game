@@ -35,9 +35,6 @@ ecran = pygame.display.set_mode( (800, 600) )
 
 
 
-gravity = 1
-
-
 # On définit le taux de rafraîchissement de la fenêtre
 fps = 30
 
