@@ -6,8 +6,13 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, conection):
         super().__init__()
         self.images = download("blue")
+        a = []
+        for i in range(0, len(self.images )):
+            image = pygame.transform.scale(self.images[i], (128,128))
+            a.append(image)
+        self.images = a
         
-        self.image = self.images[15]
+        self.image = self.images[0]
         self.rect = self.image.get_rect()
 
         self.rect.center = (100, 300)
@@ -36,7 +41,7 @@ class Player(pygame.sprite.Sprite):
                 if self.direction == ">":
                     self.image = self.images[int(tic)]
                 else:
-                    tic += 9
+                    tic += 5
                     self.image = self.images[int(tic)]
 
         self.envoi_coo()

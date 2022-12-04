@@ -61,8 +61,8 @@ marche = True
 # On met en place la boucle principale d'affichage
 while marche:
     
-    tic += 0.25
-    if tic == 8:
+    tic += 0.125
+    if tic == 6:
         tic = 0
     
     # On récupère la liste des évènements actuels
@@ -95,10 +95,11 @@ while marche:
 
     # On teste les touches appuyées
     if touches[pygame.K_q]:
-        # Le héros se déplacera vers la gauche à sa prochaine update
+        # Multiplying the value of `player1.vitesse` by -1 and assigning the result to `mouvementX`.
         mouvementX = -1 * player1.vitesse
         player1.direction = ">"
     elif touches[pygame.K_d]:
+        # Assigning the value of `player1.vitesse` to `mouvementX`.
         mouvementX = player1.vitesse
         player1.direction = "<"
 
@@ -109,13 +110,14 @@ while marche:
 
     
 
-    # On assigne les variables au tuple de mouvement du héros
+    # Assigning the values of `mouvementX` and `mouvementY` to the `mouvement` attribute of `player1`.
     player1.mouvement = (mouvementX, mouvementY)
            
-    # On demande aux éléments des groupes de se mettre à jour
-    
+
+    #on recupere la position de l'enemie
     creer_un_thread(cible= enemi.recevoir_donnees)
     
+    # On demande aux éléments des groupes de se mettre à jour
     player1_groupe.update(tic)
     enemi.group.update(tic)
     

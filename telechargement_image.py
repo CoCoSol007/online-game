@@ -5,35 +5,34 @@ pygame.init()
 def download(couleur):
     
     if couleur == "red":
-        tilset = pygame.image.load("PlayerSprite0.png")
+        tilset = pygame.image.load("Enemi_spite.png")
     elif couleur == "blue":
-        tilset = pygame.image.load("PlayerSprite1.png")
+        tilset = pygame.image.load("player_spite.png")
     
     
     
-    list_of_grenouille = [
+    liste_image = [
         
     
-            tilset.subsurface(0*64,0*64,64,64),
-            tilset.subsurface(1*64,0*64,64,64),
-            tilset.subsurface(2*64,0*64,64,64),
-            tilset.subsurface(3*64,0*64,64,64),
-            tilset.subsurface(3*64,0*64,64,64),
-            tilset.subsurface(0*64,1*64,64,64),
-            tilset.subsurface(1*64,1*64,64,64),
-            tilset.subsurface(2*64,1*64,64,64),
-            tilset.subsurface(3*64,1*64,64,64),
+            tilset.subsurface(0*32,0*32,32,32),
+            tilset.subsurface(1*32,0*32,32,32),
+            tilset.subsurface(2*32,0*32,32,32),
+            tilset.subsurface(3*32,0*32,32,32),
+            tilset.subsurface(4*32,0*32,32,32),
+            #tilset.subsurface(0*32,1*32,32,32),
+            #tilset.subsurface(1*32,1*32,32,32),
+            #tilset.subsurface(2*32,1*32,32,32),
+            #tilset.subsurface(3*32,1*32,32,32),
             
         
     ]
 
     for i in range (0,9):
-        list_of_grenouille.append(pygame.transform.flip(list_of_grenouille[i],True, False))
+        liste_image.append(pygame.transform.flip(liste_image[i],True, False))
         
-    for image in list_of_grenouille:
-        pygame.transform.scale(image, (4000,3000))
+    
         
-    return list_of_grenouille
+    return liste_image
 
 
 
