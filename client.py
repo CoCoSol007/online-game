@@ -13,7 +13,7 @@ def creer_un_thread( cible):
 		thread.start()
 
 ClientMultiSocket = socket.socket()
-host = '127.0.0.1'
+host = '192.168.1.40'
 port = 2004
 ClientMultiSocket.connect((host, port))
 envoi("join", ClientMultiSocket)

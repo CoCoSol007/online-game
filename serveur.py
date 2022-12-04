@@ -1,11 +1,12 @@
 import socket
 from _thread import *
+print("bonjour je mappele Corentin Solois ")
 import threading
 
 
 
 ServerSideSocket = socket.socket()
-host = '127.0.0.1'
+host = '192.168.1.40'
 port = 2004
 
 
