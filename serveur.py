@@ -6,7 +6,7 @@ import threading
 
 
 ServerSideSocket = socket.socket()
-host = '192.168.1.40'
+host = ''
 port = 2004
 
 
