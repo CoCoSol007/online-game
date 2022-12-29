@@ -2,7 +2,7 @@ import socket
 
 
 connexion = socket.socket()
-host = '192.168.1.40'
+host = '138.68.96.66'
 port = 2004
 connexion.connect((host, port))
 
