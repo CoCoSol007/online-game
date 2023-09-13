@@ -1,6 +1,5 @@
 import socket
 from _thread import *
-print("bonjour je mappele Corentin Solois ")
 import threading
 
 
