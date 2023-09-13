@@ -1,6 +1,6 @@
 # About
 
-A Nano-Online Game made with Python and espasialy with the lib Pygame for renderer and Threading and socket for Online engine.
+A Nano-Online Game made with Python and especially with the lib Pygame for renderer and Threading and socket for Online engine.
 
 # Instalation
 
